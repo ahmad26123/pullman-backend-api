@@ -1,0 +1,1 @@
+// trip.controller.js placeholder
