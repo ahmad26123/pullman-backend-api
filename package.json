@@ -10,12 +10,13 @@
     "test": "node src/tests/busModel.test.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^8.3.1"
   },
   "description": "Backend RESTful API for the Pullman Booking System built with Node.js, Express, and MongoDB (Mongoose). Manages users, bus models, automated trip scheduling, and secure seat reservations with strict concurrency checks",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahmad26123/pullman-backend-api.git"
