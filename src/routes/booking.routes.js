@@ -1,13 +1,54 @@
-import { Router } from 'express';
+import { Router } from "express";
+
+import authenticate from "../middleware/authenticate.js";
+import authorize from "../middleware/authorize.js";
+
+import {
+  createBookingController,
+  getAllBookingsController,
+  getBookingByIdController,
+  getCustomerBookingsController,
+  updateBookingController,
+  cancelBookingController,
+} from "../controllers/booking.controller.js";
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Get all bookings' });
-});
+router.post("/", authenticate, authorize("customer"), createBookingController);
 
-router.post('/', (req, res) => {
-  res.json({ message: 'Create booking' });
-});
+router.get(
+  "/my-bookings",
+  authenticate,
+  authorize("customer"),
+  getCustomerBookingsController,
+);
+
+router.patch(
+  "/:id",
+  authenticate,
+  authorize("customer"),
+  updateBookingController,
+);
+
+router.patch(
+  "/:id/cancel",
+  authenticate,
+  authorize("customer"),
+  cancelBookingController,
+);
+
+router.get(
+  "/",                                                                                                                                                                                                                                                                                                                                          
+  authenticate,
+  authorize("secretary", "admin"),
+  getAllBookingsController,
+);
+
+router.get(
+  "/:id",
+  authenticate,
+  authorize("secretary", "admin"),
+  getBookingByIdController,
+);
 
 export default router;
