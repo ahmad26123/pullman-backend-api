@@ -10,6 +10,7 @@ import {
   getCustomerBookingsController,
   updateBookingController,
   cancelBookingController,
+  confirmBookingController,
 } from "../controllers/booking.controller.js";
 
 const router = Router();
@@ -33,8 +34,15 @@ router.patch(
 router.patch(
   "/:id/cancel",
   authenticate,
-  authorize("customer"),
+  authorize("customer", "secretary", "admin"),
   cancelBookingController,
+);
+
+router.patch(
+  "/:id/confirm",
+  authenticate,
+  authorize("customer", "secretary", "admin"),
+  confirmBookingController,
 );
 
 router.get(

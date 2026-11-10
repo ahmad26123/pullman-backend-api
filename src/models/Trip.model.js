@@ -65,11 +65,26 @@ const tripSchema = new mongoose.Schema(
       },
       default: 'scheduled',
     },
+    bookedSeatsCount: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: [0, 'Booked seats count cannot be negative'],
+    },
   },
   {
-    timestamps: true, 
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+tripSchema.virtual('availableSeats').get(function () {
+  if (this.busModelId && typeof this.busModelId.capacity === 'number') {
+    return Math.max(0, this.busModelId.capacity - (this.bookedSeatsCount || 0));
+  }
+  return undefined;
+});
 
 const Trip = mongoose.model('Trip', tripSchema);
 

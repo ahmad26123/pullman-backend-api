@@ -224,7 +224,7 @@ const runTests = async () => {
     await Booking.create({
       tripId: createdTripId,
       customerId: customerUser._id,
-      seatNumber: 1,
+      seatNumbers: [1],
       status: 'reserved'
     });
 
